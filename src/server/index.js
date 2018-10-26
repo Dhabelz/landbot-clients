@@ -4,6 +4,9 @@ const axios = require('axios');
 const hostname = '127.0.0.1';
 const port = 3000;
 
+const apibase = "https://api.landbot.io/v1/customers/";
+const apitoken = "Token 352476970f6e76b9913c8c09cf3618962e965465";
+
 /*
 Es connecta a l'API de landbot per actualitzar el camp indicat
 
@@ -13,7 +16,7 @@ vl: nou valor del camp que es vol editar
 */
 function APIUpdate(id, fd, vl){
   // Direcció de l'API
-  let url = "https://api.landbot.io/v1/customers/" + id + "/fields/" + fd + "/";
+  let url = apibase + id + "/fields/" + fd + "/";
   return (axios.put(url,
     JSON.stringify({
       "type": "string",
@@ -22,7 +25,7 @@ function APIUpdate(id, fd, vl){
     }),
     {headers: {
       "Content-Type": "application/json",
-      "Authorization": "Token 352476970f6e76b9913c8c09cf3618962e965465",
+      "Authorization": apitoken,
     }
   }));
 }
@@ -36,10 +39,10 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type');
   switch(req.url){
     case '/customers':     //Gestionem la consulta de clients
-      axios.get("https://api.landbot.io/v1/customers/", {
+      axios.get(apibase, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Token 352476970f6e76b9913c8c09cf3618962e965465",
+          "Authorization": apitoken,
         }
       }).then( response => {      //Comunicació amb èxit
         res.statusCode = 200;
@@ -94,5 +97,5 @@ const server = http.createServer((req, res) => {
 
 //Iniciem el servidor
 server.listen(port, hostname, () => {
-  console.log(`Server running at https://${hostname}:${port}/`);
+  console.log(`Servidor funcionant en https://${hostname}:${port}/`);
 });

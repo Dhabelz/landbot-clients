@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import Client from "../presentational/Client";
 import ClientPopUp from "../presentational/ClientPopUp";
 const axios = require('axios');
+const apiurl = "http://127.0.0.1:3000/";
+
 class ClientList extends Component {
   constructor() {
     super();
@@ -14,7 +16,7 @@ class ClientList extends Component {
       changes: modificacions realitzades
     */
     this.state = {total: 0, customers: [], selected: 0, edit: false, changes: {}};
-    fetch("http://127.0.0.1:3000/customers", { // Crida l'API
+    fetch(apiurl+"customers", { // Crida l'API
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -24,7 +26,7 @@ class ClientList extends Component {
         if (response.ok) {
             return response.json();
         } else {
-            throw new Error("Could not reach the API: " + response.statusText);
+            throw new Error("API no encontrada: " + response.statusText);
         }
     }).then((data) => { // Tractem les dades retornades
       let newState = this.state;
@@ -127,7 +129,7 @@ class ClientList extends Component {
     vl: nou valor del camp que es vol editar
   */
   APIUpdate(id, fd, vl){
-    let url = "http://127.0.0.1:3000/update";
+    let url = apiurl+"update";
     return fetch(url, {
       method: "PUT",
       headers: {
