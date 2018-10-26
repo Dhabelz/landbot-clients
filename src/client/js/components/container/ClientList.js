@@ -14,7 +14,7 @@ class ClientList extends Component {
       changes: modificacions realitzades
     */
     this.state = {total: 0, customers: [], selected: 0, edit: false, changes: {}};
-    fetch("http://127.0.0.1:3000/customers", { // Crida API
+    fetch("http://127.0.0.1:3000/customers", { // Crida l'API
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -26,7 +26,7 @@ class ClientList extends Component {
         } else {
             throw new Error("Could not reach the API: " + response.statusText);
         }
-    }).then((data) => { // tractem les dades retornades
+    }).then((data) => { // Tractem les dades retornades
       let newState = this.state;
       newState.total = data.total;
       newState.customers = data.customers;
@@ -61,7 +61,7 @@ class ClientList extends Component {
     e: informació de l'esdeveniment
   */
   editClient (i,e){
-    //verifiquem
+    //Verifiquem
     const sel = i<this.state.total?i:0;
 
     this.setState({selected: sel, edit: true});
@@ -75,7 +75,7 @@ class ClientList extends Component {
   }
 
   /*
-    Elimina a afegeix canvis a realitzar segons sigui necessari
+    Elimina/afegeix canvis a realitzar segons sigui necessari
     field: camp modificat
     value: nou valor del camp
   */
@@ -103,7 +103,7 @@ class ClientList extends Component {
     // recorrem tots els canvis fets
     for (let field in changes) {
       if (changes.hasOwnProperty(field)) {
-        //Cridem la API
+        //Cridem l'API
         this.APIUpdate(state.customers[i].id, field, changes[field])
         .then((response) => {
           //Actualitzem les dades del component amb les dades guardades
@@ -120,7 +120,7 @@ class ClientList extends Component {
   }
 
   /*
-    Crida a la API per actualitzar el camp
+    Crida a l'API per actualitzar el camp
 
     id: identificar del client a editar
     fd: camp que es vol editar
